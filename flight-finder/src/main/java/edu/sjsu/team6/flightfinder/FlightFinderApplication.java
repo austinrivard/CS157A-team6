@@ -8,7 +8,5 @@ public class FlightFinderApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlightFinderApplication.class, args);
-
 	}
-
 }

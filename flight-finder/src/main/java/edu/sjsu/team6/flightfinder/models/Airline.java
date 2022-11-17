@@ -5,15 +5,17 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public class Seat {
+public class Airline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    private String seatNumber;
+    private String name;
 
-    private boolean isExitRow;
+    private String websiteUrl;
 
-    @ManyToOne
-    private Zone zone;
+    private String contactNumber;
+
+    @OneToMany(mappedBy = "airline")
+    private List<Flight> flights;
 }

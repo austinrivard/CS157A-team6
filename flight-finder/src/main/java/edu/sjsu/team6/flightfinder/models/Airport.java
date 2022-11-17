@@ -1,13 +1,27 @@
 package edu.sjsu.team6.flightfinder.models;
 
-import java.util.Collections;
-import java.util.List;
+import javax.persistence.*;
 
-public class Airport
-{
-    private String name;
-    private Address address;
+import org.hibernate.annotations.Formula;
+
+@Entity
+public class Airport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String code;
 
-    public List<Flight> getFlights() { return Collections.emptyList(); }
+    private String name;
+
+    private String city;
+
+    private String state;
+
+    private String zipCode;
+
+    @Formula("CONCAT(city, ', ', state, ' ', zipCode)")
+    private String address;
+
+
 }

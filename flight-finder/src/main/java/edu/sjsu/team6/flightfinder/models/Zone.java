@@ -5,15 +5,18 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public class Seat {
+public class Zone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    private String seatNumber;
+    private String classType;
 
-    private boolean isExitRow;
+    private String fare;
 
     @ManyToOne
-    private Zone zone;
+    private Flight flight;
+
+    @OneToMany(mappedBy = "zone")
+    private List<Seat> seats;
 }

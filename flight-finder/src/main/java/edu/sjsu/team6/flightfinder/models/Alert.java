@@ -1,20 +1,22 @@
 package edu.sjsu.team6.flightfinder.models;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
-public class Itinerary {
+public class Alert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    // private String alertType;
 
-    private LocalDateTime departureTime, arrivalTime;
+    private String communicationPreference;
 
     @ManyToOne
-    private User searchedBy;
+    private User setBy;
 
     @ManyToOne
-    private Airport departsFrom, arrivesAt;
+    private Flight flight;
 }
