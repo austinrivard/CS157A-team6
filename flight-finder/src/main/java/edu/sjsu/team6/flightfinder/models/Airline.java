@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Airline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +19,6 @@ public class Airline {
 
     private String contactNumber;
 
-    @OneToMany(mappedBy = "airline")
+    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY)
     private List<Flight> flights;
 }

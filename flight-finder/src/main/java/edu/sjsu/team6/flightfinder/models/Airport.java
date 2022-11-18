@@ -4,7 +4,10 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Formula;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Airport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +23,6 @@ public class Airport {
 
     private String zipCode;
 
-    @Formula("CONCAT(city, ', ', state, ' ', zipCode)")
+    @Formula("CONCAT(city, ', ', state, ' ', zip_code)")
     private String address;
-
-
 }

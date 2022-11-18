@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import lombok.Data;
 
 @Entity
+@Data
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +26,9 @@ public class Flight {
     @ManyToOne
     private Airline airline;
 
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
     private List<Zone> zones;
 
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
     private List<Alert> alerts;
 }

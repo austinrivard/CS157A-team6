@@ -1,10 +1,11 @@
 package edu.sjsu.team6.flightfinder.models;
 
-import java.util.List;
-
 import javax.persistence.*;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Alert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

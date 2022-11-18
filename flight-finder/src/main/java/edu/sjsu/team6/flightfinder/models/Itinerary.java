@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Itinerary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
