@@ -16,13 +16,36 @@ INSERT INTO airline (name, website_url, contact_number)
 VALUES
     ('American Airlines', 'www.aa.com', '1 (800) 433-7300'),
     ('Alaska Airlines', 'www.alaskaair.com', '1 (800) 252-7522'),
-    ('Delta Air Lines', 'www.delta.com', '1 (800) 221-1212')
+    ('Delta Air Lines', 'www.delta.com', '1 (800) 221-1212'),
+    ('United Air Lines', 'www.united.com', '1 (800) 221-1212'),
+    ('Canada Air', 'www.canadaair.com', '1 (800) 221-1212'),
+    ('Dubai Air', 'www.dubaiair.com', '1 (800) 221-1212'),
+    ('Southwest Airlines', 'www.southwest.com', '1 (800) 221-1212'),
+    ('Frontier Airlines', 'www.frontier.com', '1 (800) 221-1212'),
+    ('Ryan Air', 'www.ryanair.com', '1 (800) 221-1212'),
+    ('Spirit Airlines', 'www.spirit.com', '1 (800) 221-1212')
 ;
 
 INSERT INTO airport (name, code, city, state, zip_code)
 VALUES
     ('San Jose International Airport', 'SJC', 'San Jose', 'CA', '95110'),
     ('San Francisco International Airport', 'SFO', 'San Francisco', 'CA', '94128'),
-    ('Los Angeles International Airport', 'LAX', 'Los Angeles', 'CA', '90045')
+    ('Los Angeles International Airport', 'LAX', 'Los Angeles', 'CA', '90045'),
+    ('Oakland International Airport', 'OAK', 'Oakland', 'CA', '94621'),
+    ('Newark Liberty International Airport', 'EWR', 'Newark', 'NJ', '07114'),
+    ('LaGuardia Airport', 'LGA', 'Queens', 'NY', '11371'),
+    ('John F. Kennedy International Airport', 'JFK', 'Queens', 'NY', '11430'),
+    ('William P. Hobby Airport', 'HOU', 'Houston', 'TX', '77061'),
+    ('George Bush Intercontinental Airport', 'IAH', 'Houston', 'TX', '77032'),
+    ('Dallas/Fort Worth International Airport', 'DFW', 'DFW Airport', 'TX', '75261')
 ;
 
+-- INSERT INTO alert (communication_preference, flight_id, set_by_id)
+-- VALUES
+--     ('email', 1, 1)
+-- ;
+
+INSERT INTO itinerary (arrival_time, departure_time, arrives_at_id, departs_from_id, searched_by_id)
+VALUES
+    ('2022-12-10 18:00:45', '2022-12-10 14:45:00', 9, 1, 1)
+;
