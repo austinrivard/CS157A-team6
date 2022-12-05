@@ -37,6 +37,8 @@ public class User {
 
     private String mobileNumber;
 
+    private String email;
+
     private String city;
 
     private String state;
