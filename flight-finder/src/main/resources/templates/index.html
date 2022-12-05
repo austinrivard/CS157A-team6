@@ -10,6 +10,7 @@
 <body>
 	<!-- <div class="container text-center"> -->
 		<h1>FlightFinder</h1>
+		<h3 th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h3>
 		<h3><a th:href="@{/registerUser}">Register</a></h3>
 		<h3><a th:href="@{/login}">Login</a></h3>
 	</div>
@@ -18,6 +19,27 @@
 			<input required type="text" placeholder="Enter the flight to search">
 			<button type="submit">
 				submit
+			</button>
+		</form>
+	</div>
+
+	<div class="alerts">
+		<form th:action="@{/addAlert}" th:object="${alert}" method="post">
+			<fieldset>
+				<legend>Select method of communication</legend>
+				<label class="custom-control-label">
+					<input required type="radio" th:field="*{communicationPreference}" th:value="email"> Email
+				</label>
+				<br>
+				<label class="custom-control-label">
+					<input required type="radio" th:field="*{communicationPreference}" th:value="phone"> Text
+				</label>
+			</fieldset>
+			
+			<input required id="flightNumber" name="flightNumber" th:value="${flightNumber}" placeholder="Enter flight #">
+			<!-- <input hidden="true" th:name="setBy" th:value="${#authentication.getPrincipal().getUser().getId()}"> -->
+			<button type="submit">
+				create alert
 			</button>
 		</form>
 	</div>

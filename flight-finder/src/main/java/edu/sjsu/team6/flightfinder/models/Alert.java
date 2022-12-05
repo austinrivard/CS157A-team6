@@ -19,5 +19,5 @@ public class Alert {
     private User setBy;
 
     @ManyToOne
-    private Flight flight;
+    private Flight flightToTrack;
 }

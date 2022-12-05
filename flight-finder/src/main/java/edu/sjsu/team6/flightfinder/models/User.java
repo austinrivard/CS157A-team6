@@ -1,5 +1,6 @@
 package edu.sjsu.team6.flightfinder.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="user")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
