@@ -40,7 +40,7 @@ VALUES
     ('Dallas/Fort Worth International Airport', 'DFW', 'DFW Airport', 'TX', '75261')
 ;
 
--- INSERT INTO alert (communication_preference, flight_id, set_by_id)
+-- INSERT INTO alert (communication_preference, flight_to_track_id, set_by_id)
 -- VALUES
 --     ('email', 1, 1)
 -- ;
