@@ -35,17 +35,12 @@ public class FlightFinderController {
         this.userService = userService;
     }
 
-    @GetMapping("index")
-    public String viewHomePage() {
-        return "index";
-    }
-
-	// @GetMapping("index")
-	// public String viewHomePage(Model model) {
-	// 	model.addAttribute("alert", new Alert());
-	// 	// model.addAttribute("flightNumber", new String());
-	// 	return "index";
-	// }
+	@GetMapping("index")
+	public String viewHomePage(Model model) {
+		model.addAttribute("alert", new Alert());
+		// model.addAttribute("flightNumber", new String());
+		return "index";
+	}
 
 	@PostMapping("/addAlert")
 	public String addAlert(@ModelAttribute("alert") Alert alert, @RequestParam("flightNumber") String flightNumber) {
