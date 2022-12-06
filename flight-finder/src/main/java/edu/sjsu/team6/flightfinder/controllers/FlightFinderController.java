@@ -117,4 +117,12 @@ public class FlightFinderController {
         model.addAttribute("flights", flights);
         return "flight";
     }
+
+    @GetMapping("/search")
+    public String openSearch(Model model)
+    {
+        Flight flight = new Flight();
+        model.addAttribute("flight", flight);
+        return "search";
+    }
 }
