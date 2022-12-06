@@ -32,6 +32,7 @@
         </div>
     </div>
 </nav>
+<div class="alert alert-info" th:if="${param.deleteSuccess}">Successfully deleted user!</div>
 <div class="container">
     <div class="row col-md-10">
 
@@ -59,8 +60,13 @@
                 <td th:text = "${user.username}"></td>
                 <td th:text = "${user.email}"></td>
                 <td>
-                <!-- <a href="#" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/editUser/' + ${user.id}}"><i class="fa fa-edit"></i> Edit</a> -->
-                <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/deleteUser/' + ${user.id}}"><i class="fa fa-trash-o"></i> Delete</a>
+
+                    <form method="post" th:action="@{/deleteUser}" th:object="${user}">
+                        <input hidden="true" th:value="${user.id}" name="id">
+                        <button type="submit" class="btn btn-danger btn-xs purple deleteView">Delete</button>
+                    </form>
+                <!-- <a href="#" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/editUser/' + ${user.id}}"><i class="fa fa-edit"></i> Edit</a>
+                <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/deleteUser/' + ${user.id}}"><i class="fa fa-trash-o"></i> Delete</a> -->
                 </td>
             </tr>
         </tbody>

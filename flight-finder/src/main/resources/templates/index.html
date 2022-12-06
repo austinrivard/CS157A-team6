@@ -28,11 +28,15 @@
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/search}">Search Flights</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<h5 th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h5>
+	<!-- <a th:href="@{/search}"> Search Flights</a> -->
+	<h5 class="m-3 w-25" th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h5>
 	<div class="alert alert-danger" th:if="${param.error}">No flights exist with the given flight number!</div>
 	<div class="alert alert-info" th:if="${param.success}">Successfully added alert!</div>
 	<div class="searchbar">
@@ -46,7 +50,7 @@
 
 	<div class="m-3 p-3 w-25 border rounded-3" id="alertsContainer">
 		<form th:action="@{/addAlert}" method="post" th:object="${alert}">
-			<div class="m-0 p-0">Get alerted when the price drops!</div>
+			<div class="m-0 p-1 pt-0">Get alerted when the price of a flight drops!</div>
 			<div class="form-check form-switch">
 				<input class="form-check-input" type="radio" th:field="*{communicationPreference}" value="email" required>
 				<label class="form-check-label">Email</label>
