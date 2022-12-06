@@ -117,4 +117,19 @@ public class FlightFinderController {
         model.addAttribute("flights", flights);
         return "flight";
     }
+
+    @GetMapping("/addFlight")
+    public String addFlight(Model model){
+        Flight flight = new Flight();
+        model.addAttribute("flight", flight);
+        return "addFlight";
+    }
+
+    @PostMapping("/saveFlight")
+    public String saveFlight(@ModelAttribute("flight") Flight flight, Model model)
+    {
+        System.out.println(flight);
+        flightService.saveFlight(flight);
+        return "redirect:/addFlight?success";
+    }
 }
