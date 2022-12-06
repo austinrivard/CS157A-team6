@@ -51,6 +51,7 @@
                 <th>Depature Time</th>
                 <th>Flight Number</th>
                 <th>Flight Name</th>
+                <th>Cost (USD)</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -60,6 +61,7 @@
                 <td th:text = "${flight.departureTime}"></td>
                 <td th:text = "${flight.flightNumber}"></td>
                 <td th:text = "${flight.name}"></td>
+                <td th:text = "${flight.price}"></td>
                 <td>
                     <div class="input-group">
                         <form method="post" th:action="@{/editFlight}" th:object="${flight}">
