@@ -23,7 +23,7 @@ public class WebSecurityConfig{
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/register/**").permitAll()
-                .antMatchers("/index").permitAll()
+                .antMatchers("/index").authenticated()
                 // .antMatchers("/users").hasRole("ADMIN")
                 .and()
                 .formLogin(
