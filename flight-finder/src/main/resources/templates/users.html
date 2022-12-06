@@ -36,6 +36,12 @@
     <div class="row col-md-10">
         <h2>Registered Users</h2>
     </div>
+    <a th:href="@{/addUser}">
+        <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add new user</button>
+    </a>
+    <br/>
+	<br/>
+	<br/>
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <tr>
@@ -43,6 +49,7 @@
                 <th>Last Name</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +58,10 @@
                 <td th:text = "${user.lastName}"></td>
                 <td th:text = "${user.username}"></td>
                 <td th:text = "${user.email}"></td>
+                <td>
+                <a href="#" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/editUser/' + ${user.id}}"><i class="fa fa-edit"></i> Edit</a>
+                <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/deleteUser/' + ${user.id}}"><i class="fa fa-trash-o"></i> Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>
