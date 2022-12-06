@@ -14,6 +14,16 @@
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/users}">Manage Users</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/flight}">Edit Flights</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<br/>
@@ -30,10 +40,13 @@
     <form th:action="@{/saveFlight}" th:object="${flight}"
 			method="post" style="max-width: 600px; margin: 0 auto;">
         <div class="m-3">   
-            <!-- <div class="form-group row">
+            <script>
+            </script>
+            <div class="form-group row">
                 <label class="col-4 col-form-label">Arrival Time </label>
                 <div class="col-8">
-                    <input type="datetime-local" value ="arrivalTime"/>
+                    <!-- <input type="datetime-local" name="arrivalTime" id="arrivalTime"/> -->
+                    <input type="datetime-local" value ="departureTime"/>
                 </div>
             </div>
             <div class="form-group row">
@@ -41,7 +54,7 @@
                 <div class="col-8">
                     <input type="datetime-local" value ="departureTime"/>
                 </div>
-            </div> -->
+            </div>
             <div class="form-group row">
                 <label class="col-4 col-form-label">Flight Number </label>
                 <div class="col-8">
