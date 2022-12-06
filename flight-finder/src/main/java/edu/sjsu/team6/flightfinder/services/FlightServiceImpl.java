@@ -20,7 +20,7 @@ public class FlightServiceImpl implements FlightService
     {
         List<Flight> flights = repository.findAll();
         return flights.stream()
-                .map((flight) -> mapToFlight(flight))
+                .map(this::mapToFlight)
                 .collect(Collectors.toList());
     }
 

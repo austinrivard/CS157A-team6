@@ -24,7 +24,9 @@ public class Flight {
     private LocalDateTime departureTime, arrivalTime;
 
     @ManyToOne
-    private Airport departsFrom, arrivesAt;
+    private Airport departsFrom;
+    @ManyToOne
+    private Airport arrivesAt;
 
     @ManyToOne
     private Airline airline;
@@ -34,4 +36,7 @@ public class Flight {
 
     @OneToMany(mappedBy = "flightToTrack", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alert> alerts;
+
+    private String departsFromAirportCode;
+    private String arrivesAtAirportCode;
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Formula;
+import org.springframework.lang.NonNull;
 
 import lombok.Data;
 
@@ -21,7 +22,7 @@ public class User implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String username;
-
+    
     private String password;
 
     private String cPassword;
@@ -30,7 +31,7 @@ public class User implements Serializable {
     private String name;
 
     private String firstName;
-
+    
     private String lastName;
 
     private String gender;

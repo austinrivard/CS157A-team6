@@ -32,13 +32,13 @@ public class FlightFinderController {
     private FlightService flightService;
 
     @Autowired 
-    UserRepo userRepo;
+    private UserRepo userRepo;
 
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
-	FlightRepository flightRepository;
+	private FlightRepository flightRepository;
 
     public FlightFinderController(UserService userService, FlightService flightService) {
         this.userService = userService;
@@ -135,6 +135,19 @@ public class FlightFinderController {
         return "flight";
     }
 
+    @GetMapping("/search")
+    public String openSearch(Model model)
+    {
+        model.addAttribute("flight", new Flight());
+        return "search";
+    }
+
+    @PostMapping("/search")
+    public String submitSearch(@ModelAttribute("flight") Flight flight)
+    {
+        return "search_results";
+    }
+    
     @PostMapping("/editFlight")
     public String editFlight(@ModelAttribute("flight") Flight flight) {
         Flight existingFlight = flightRepository.findById(flight.getId()).get();
