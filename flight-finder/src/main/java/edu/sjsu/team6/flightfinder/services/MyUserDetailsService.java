@@ -1,9 +1,6 @@
 package edu.sjsu.team6.flightfinder.services;
 
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,14 +22,6 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        // if(user != null)
-        // {
-        //     return new org.springframework.security.core.userdetails.User(user.getEmail()
-        //             , user.getPassword(),
-        //             user.getRoles().stream()
-        //                     .map((role) -> new SimpleGrantedAuthority(role.getName()))
-        //                     .collect(Collectors.toList()));
-        // }
         return new MyUserPrincipal(user);
     }
 }

@@ -10,18 +10,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.sjsu.team6.flightfinder.models.*;
+import edu.sjsu.team6.flightfinder.services.*;
+
 import edu.sjsu.team6.flightfinder.repositories.FlightRepository;
 import edu.sjsu.team6.flightfinder.repositories.UserRepo;
-import edu.sjsu.team6.flightfinder.services.UserService;
 @Controller
 public class FlightFinderController {
 	
     @Autowired
     private UserService userService;
+    private FlightService flightService;
+
     @Autowired 
     UserRepo userRepo;
 
@@ -31,8 +33,9 @@ public class FlightFinderController {
 	@Autowired
 	FlightRepository flightRepository;
 
-    public FlightFinderController(UserService userService) {
+    public FlightFinderController(UserService userService, FlightService flightService) {
         this.userService = userService;
+        this.flightService = flightService;
     }
 
     @GetMapping("")
@@ -110,6 +113,8 @@ public class FlightFinderController {
 
     @GetMapping("/flight")
     public String flights(Model model){
+        List<Flight> flights = flightService.findAllFlights();
+        model.addAttribute("flights", flights);
         return "flight";
     }
 }

@@ -1,7 +1,6 @@
 package edu.sjsu.team6.flightfinder.models;
 
 import javax.persistence.*;
-import org.hibernate.annotations.Formula;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
