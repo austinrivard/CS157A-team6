@@ -28,16 +28,14 @@
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/search}">Search Flights</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-    <h1> FlightFinder </h1>
-    </div>
-		<h3 th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h3>
-	</div>
-	<div>
-		<a th:href="@{/search}"> Search Flights</a>
+	<!-- <a th:href="@{/search}"> Search Flights</a> -->
 	<h5 class="m-3 w-25" th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h5>
 	<div class="alert alert-danger" th:if="${param.error}">No flights exist with the given flight number!</div>
 	<div class="alert alert-info" th:if="${param.success}">Successfully added alert!</div>
