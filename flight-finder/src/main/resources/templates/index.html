@@ -38,24 +38,43 @@
 	</div>
 	<div>
 		<a th:href="@{/search}"> Search Flights</a>
+	<h5 class="m-3 w-25" th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h5>
+	<div class="alert alert-danger" th:if="${param.error}">No flights exist with the given flight number!</div>
+	<div class="alert alert-info" th:if="${param.success}">Successfully added alert!</div>
+	<div class="searchbar">
+		<form>
+			<input required type="text" placeholder="Enter the flight to search">
+			<button type="submit">
+				submit
+			</button>
+		</form>
 	</div>
 
-	<div class="alerts">
-		<form th:action="@{/addAlert}" th:object="${alert}" method="post">
-			<fieldset>
-				<legend>Select method of communication</legend>
-				<label class="custom-control-label">
-					<input required type="radio" th:field="*{communicationPreference}" th:value="email"> Email
+	<div class="m-3 p-3 w-25 border rounded-3" id="alertsContainer">
+		<form th:action="@{/addAlert}" method="post" th:object="${alert}">
+			<div class="m-0 p-1 pt-0">Get alerted when the price of a flight drops!</div>
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="radio" th:field="*{communicationPreference}" value="email" required>
+				<label class="form-check-label">Email</label>
+			</div>
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="radio" th:field="*{communicationPreference}" value="text" required>
+				<label class="form-check-label">Text</label>
+			</div>
+			<div class="form-group mb-2">
+				<label class="form-label">
+					Flight number
+					<input list="flights" class="form-control" id="flightNumber" name="flightNumber" th:field="*{flightNumber}">
 				</label>
-				<br>
-				<label class="custom-control-label">
-					<input required type="radio" th:field="*{communicationPreference}" th:value="phone"> Text
-				</label>
-			</fieldset>
-			
-			<input required id="flightNumber" name="flightNumber" th:value="${flightNumber}" placeholder="Enter flight #">
-			<button type="submit">
-				create alert
+				<!-- <div class="alert-sm alert-danger" th:if="${#fields.hasErrors('flightNumber')}" th:errors="*{flightNumber}">error</div> -->
+				<datalist id="flights">
+					<option th:each="row : ${flights}" th:value="${row.flightNumber}">
+				</datalist>
+			</div>
+
+			<!-- <input required id="flightNumber" name="flightNumber" th:value="${flightNumber}" placeholder="Enter flight #"> -->
+			<button type="submit" class="btn btn-primary">
+				Create Alert
 			</button>
 		</form>
 	</div>

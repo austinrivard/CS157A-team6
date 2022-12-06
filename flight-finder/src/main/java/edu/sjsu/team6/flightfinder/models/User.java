@@ -51,10 +51,10 @@ public class User implements Serializable {
     @Formula("CONCAT(city, ', ', state, ' ', zip_code)")
     private String address;
 
-    @OneToMany(mappedBy = "searchedBy", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "searchedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Itinerary> itineraries;
 
-    @OneToMany(mappedBy = "setBy", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "setBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alert> alerts;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

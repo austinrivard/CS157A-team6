@@ -19,8 +19,9 @@ public class Flight {
 
     private String name;
 
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private String price;
+
+    private LocalDateTime departureTime, arrivalTime;
 
     @ManyToOne
     private Airport departsFrom;
@@ -30,13 +31,12 @@ public class Flight {
     @ManyToOne
     private Airline airline;
 
-    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Zone> zones;
 
-    @OneToMany(mappedBy = "flightToTrack", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "flightToTrack", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alert> alerts;
 
     private String departsFromAirportCode;
     private String arrivesAtAirportCode;
-    private double price;
 }

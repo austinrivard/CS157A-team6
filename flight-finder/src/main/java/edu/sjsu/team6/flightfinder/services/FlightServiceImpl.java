@@ -24,7 +24,18 @@ public class FlightServiceImpl implements FlightService
                 .collect(Collectors.toList());
     }
 
-    private Flight mapToFlight(Flight flight){
+    @Override
+    public void saveFlight(Flight flight)
+    {
+        flight.setArrivalTime(flight.getArrivalTime());
+        flight.setDepartureTime(flight.getDepartureTime());
+        flight.setFlightNumber(flight.getFlightNumber());
+        flight.setName(flight.getName());
+        repository.save(flight);
+    }
+
+    private Flight mapToFlight(Flight flight)
+    {
         Flight flightList = new Flight();
         flightList.setArrivalTime(flight.getArrivalTime());
         flightList.setDepartureTime(flight.getDepartureTime());

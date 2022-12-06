@@ -2,6 +2,8 @@ package edu.sjsu.team6.flightfinder.models;
 
 import javax.persistence.*;
 
+import org.springframework.data.annotation.Transient;
+
 import lombok.Data;
 
 @Entity
@@ -14,6 +16,9 @@ public class Alert {
     // private String alertType;
 
     private String communicationPreference;
+
+    @Transient
+    private String flightNumber;
 
     @ManyToOne
     private User setBy;
