@@ -36,13 +36,8 @@
     </div>
 		<h3 th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h3>
 	</div>
-	<div class="searchbar">
-		<form>
-			<input required type="text" placeholder="Enter the flight to search">
-			<button type="submit">
-				submit
-			</button>
-		</form>
+	<div>
+		<a th:href="@{/search}"> Search Flights</a>
 	</div>
 
 	<div class="alerts">
