@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>FlightFinder - Add Flight</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-color bg-light fixed-top" th:fragment="header">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">FlightFinder</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</nav>
+	<br/>
+	<br/>
+	<br/>
+
+    <div th:if="${param.success}">
+        <div class="alert alert-info">Successfully added flight!</div>
+    </div>
+
+    <!-- <h1>Add Flight</h1> -->
+    <h1 class="text-center">Add Flight</h1>
+
+    <form th:action="@{/saveFlight}" th:object="${flight}"
+			method="post" style="max-width: 600px; margin: 0 auto;">
+        <div class="m-3">   
+            <!-- <div class="form-group row">
+                <label class="col-4 col-form-label">Arrival Time </label>
+                <div class="col-8">
+                    <input type="datetime-local" value ="arrivalTime"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Departure Time </label>
+                <div class="col-8">
+                    <input type="datetime-local" value ="departureTime"/>
+                </div>
+            </div> -->
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Flight Number </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{flightNumber}" class="form-control" 
+                            required minlength="2" maxlength="20"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Flight Name </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{name}" class="form-control" 
+                            required minlength="2" maxlength="20"/>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <a th:href="@{/flight}">
+                    <button class="btn btn-primary" type="button" >Cancel</button>
+                </a>
+                <button class="btn btn-primary" type="submit" >Add Flight</button>
+            </div>
+        </div>
+    </form>
+    
+</body>
+</html>
