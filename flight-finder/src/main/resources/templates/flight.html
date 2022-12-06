@@ -32,6 +32,8 @@
         </div>
     </div>
 </nav>
+<div class="alert alert-info" th:if="${param.editSuccess}">Successfully edited flight!</div>
+<div class="alert alert-info" th:if="${param.deleteSuccess}">Successfully deleted flight!</div>
 <div class="container">
     <div class="row col-md-10">
         <h2>Flights Directory</h2>
@@ -59,8 +61,19 @@
                 <td th:text = "${flight.flightNumber}"></td>
                 <td th:text = "${flight.name}"></td>
                 <td>
-                    <a href="#" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/editFlight/' + ${flight.id}}"></i> Edit</a>
-                    <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/deleteFlight/' + ${flight.id}}"></i> Delete</a>
+                    <div class="input-group">
+                        <form method="post" th:action="@{/editFlight}" th:object="${flight}">
+                            <div class="input-group">
+                                <input hidden="true" th:value="${flight.id}" name="id">
+                                <input class="form-control me-2" th:field="*{price}" placeholder="New Price">
+                                <button type="submit" class="btn btn-primary btn-xs purple editView me-2">Edit</button>
+                            </div>
+                        </form>
+                        <form method="post" th:action="@{/deleteFlight}" th:object="${flight}">
+                            <input hidden="true" th:value="${flight.id}" name="id">
+                            <button type="submit" class="btn btn-danger btn-xs purple deleteView">Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         </tbody>
