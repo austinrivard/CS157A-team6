@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.sjsu.team6.flightfinder.models.*;
@@ -143,9 +144,15 @@ public class FlightFinderController {
     }
 
     @PostMapping("/search")
-    public String submitSearch(@ModelAttribute("flight") Flight flight)
+    public ModelAndView submitSearch(Model model, @ModelAttribute("flight") Flight flight)
     {
-        return "search_results";
+        ModelAndView modelAndView = new ModelAndView();
+        List<Flight> successfulSearches = flightRepository.findAllByDepartsFromAirportCode(
+            flight.getDepartsFromAirportCode()
+        );
+        modelAndView.addObject("flights", successfulSearches);
+        modelAndView.setViewName("search_results");
+        return modelAndView;
     }
     
     @PostMapping("/editFlight")
