@@ -11,32 +11,57 @@
           crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-color bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">FlightFinder</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/login}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+	<nav class="navbar navbar-expand-lg navbar-color bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">FlightFinder</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/login}">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
     <h1> FlightFinder </h1>
     </div>
-</div>
+	<!-- <div class="container text-center"> -->
+		<h1>FlightFinder</h1>
+		<h3 th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h3>
+		<h3><a th:href="@{/registerUser}">Register</a></h3>
+		<h3><a th:href="@{/login}">Login</a></h3>
+	</div>
 	<div class="searchbar">
 		<form>
 			<input required type="text" placeholder="Enter the flight to search">
 			<button type="submit">
 				submit
+			</button>
+		</form>
+	</div>
+
+	<div class="alerts">
+		<form th:action="@{/addAlert}" th:object="${alert}" method="post">
+			<fieldset>
+				<legend>Select method of communication</legend>
+				<label class="custom-control-label">
+					<input required type="radio" th:field="*{communicationPreference}" th:value="email"> Email
+				</label>
+				<br>
+				<label class="custom-control-label">
+					<input required type="radio" th:field="*{communicationPreference}" th:value="phone"> Text
+				</label>
+			</fieldset>
+			
+			<input required id="flightNumber" name="flightNumber" th:value="${flightNumber}" placeholder="Enter flight #">
+			<button type="submit">
+				create alert
 			</button>
 		</form>
 	</div>

@@ -29,6 +29,6 @@ public class Flight {
     @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
     private List<Zone> zones;
 
-    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "flightToTrack", fetch = FetchType.LAZY)
     private List<Alert> alerts;
 }

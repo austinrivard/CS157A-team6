@@ -60,10 +60,10 @@ VALUES
     ('2022-12-31 10:23:49', '2022-12-31 02:09:12', 'AA394', 'Boeing 404', 2, 1, 10),
     ('2022-12-25 14:32:51', '2022-12-25 08:59:59', 'AA398', 'Boeing 302', 1, 10, 9);
 
--- INSERT INTO alert (communication_preference, flight_id, set_by_id)
--- VALUES
---     ('email', 1, 1)
--- ;
+INSERT INTO alert (communication_preference, flight_to_track_id, set_by_id)
+VALUES
+    ('email', 1, 1)
+;
 
 INSERT INTO itinerary (arrival_time, departure_time, arrives_at_id, departs_from_id, searched_by_id)
 VALUES
