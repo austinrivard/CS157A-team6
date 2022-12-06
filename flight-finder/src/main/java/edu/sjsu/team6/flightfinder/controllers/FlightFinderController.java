@@ -2,9 +2,13 @@ package edu.sjsu.team6.flightfinder.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.sjsu.team6.flightfinder.models.*;
 import edu.sjsu.team6.flightfinder.repositories.FlightRepository;
@@ -35,23 +40,32 @@ public class FlightFinderController {
         this.userService = userService;
     }
 
-    @GetMapping("")
+    @GetMapping("/")
     public String viewIndex() {
         return "login";
     }
 
-	@GetMapping("index")
+	@GetMapping("/index")
 	public String viewHomePage(Model model) {
 		model.addAttribute("alert", new Alert());
-		model.addAttribute("flightNumber", new String());
+        model.addAttribute("flights", flightRepository.findAll());
 		return "index";
 	}
 
 	@PostMapping("/addAlert")
-	public String addAlert(@ModelAttribute("alert") Alert alert, @RequestParam("flightNumber") String flightNumber) {
-        System.out.printf("Received request to add alert: %s with flight number %s\n", alert, flightNumber);
-		System.out.println("found flight by flight number? " + (flightRepository.findByFlightNumber(flightNumber).isPresent() ? "yes" : "no"));
-		alert.setFlightToTrack(flightRepository.findByFlightNumber(flightNumber).get());
+	public String addAlert(@ModelAttribute("alert") Alert alert) {
+        System.out.printf("Received request to add alert: %s\n", alert);
+
+        Optional<Flight> flightOptional = flightRepository.findByFlightNumber(alert.getFlightNumber());
+        System.out.println("found flight by flight number? " + (flightOptional.isPresent() ? "yes" : "no"));
+        
+        if (flightOptional.isEmpty()) {
+            // errors.rejectValue("flightNumber", "No flights exist with the given flight number");
+            // redirectAttributes.addFlashAttribute("errorMessage", );
+            return "redirect:/index?error";
+        }
+
+        alert.setFlightToTrack(flightOptional.get());
 		User currentUser = ((MyUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 		alert.setSetBy(currentUser);
 
@@ -61,7 +75,7 @@ public class FlightFinderController {
 		);
 
 		System.out.println("updated " + rowsAffected + " rows.");
-		return (rowsAffected == 0) ? "error" : "index";
+		return (rowsAffected == 0) ? "redirect:/index?error" : "redirect:/index?success";
 	}
 
 	@GetMapping("/register")
