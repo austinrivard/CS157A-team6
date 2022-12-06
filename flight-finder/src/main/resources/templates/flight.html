@@ -47,8 +47,10 @@
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <tr>
+                <th>Departure Time</th>
+                <th>Departure Airport</th>
                 <th>Arrival Time</th>
-                <th>Depature Time</th>
+                <th>Arrival Airport</th>
                 <th>Flight Number</th>
                 <th>Flight Name</th>
                 <th>Cost (USD)</th>
@@ -57,8 +59,10 @@
         </thead>
         <tbody>
             <tr th:each = "flight : ${flights}">
-                <td th:text = "${flight.arrivalTime}"></td>
                 <td th:text = "${flight.departureTime}"></td>
+                <td th:text = "${flight.departsFromAirportCode}"></td>
+                <td th:text = "${flight.arrivalTime}"></td>
+                <td th:text = "${flight.arrivesAtAirportCode}"></td>
                 <td th:text = "${flight.flightNumber}"></td>
                 <td th:text = "${flight.name}"></td>
                 <td th:text = "${flight.price}"></td>
@@ -67,7 +71,7 @@
                         <form method="post" th:action="@{/editFlight}" th:object="${flight}">
                             <div class="input-group">
                                 <input hidden="true" th:value="${flight.id}" name="id">
-                                <input class="form-control me-2" th:field="*{price}" placeholder="New Price">
+                                <input class="form-control me-2" th:field="*{price}" placeholder="New Price" style="width: 100px">
                                 <button type="submit" class="btn btn-primary btn-xs purple editView me-2">Edit</button>
                             </div>
                         </form>

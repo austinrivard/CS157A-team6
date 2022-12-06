@@ -41,8 +41,10 @@
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
+                    <th>Departure Time</th>
+                    <th>Departure Airport</th>
                     <th>Arrival Time</th>
-                    <th>Depature Time</th>
+                    <th>Arrival Airport</th>
                     <th>Flight Number</th>
                     <th>Flight Name</th>
                     <th>Cost (USD)</th>
@@ -51,8 +53,10 @@
             </thead>
             <tbody>
                 <tr th:each = "flight : ${flights}">
-                    <td th:text = "${flight.arrivalTime}"></td>
                     <td th:text = "${flight.departureTime}"></td>
+                    <td th:text = "${flight.departsFromAirportCode}"></td>
+                    <td th:text = "${flight.arrivalTime}"></td>
+                    <td th:text = "${flight.arrivesAtAirportCode}"></td>
                     <td th:text = "${flight.flightNumber}"></td>
                     <td th:text = "${flight.name}"></td>
                     <td th:text = "${flight.price}"></td>

@@ -39,14 +39,6 @@
 	<h5 class="m-3 w-25" th:inline="text">Hello, [[${#authentication.getPrincipal().getUser().getName()}]].</h5>
 	<div class="alert alert-danger" th:if="${param.error}">No flights exist with the given flight number!</div>
 	<div class="alert alert-info" th:if="${param.success}">Successfully added alert!</div>
-	<div class="searchbar">
-		<form>
-			<input required type="text" placeholder="Enter the flight to search">
-			<button type="submit">
-				submit
-			</button>
-		</form>
-	</div>
 
 	<div class="m-3 p-3 w-25 border rounded-3" id="alertsContainer">
 		<form th:action="@{/addAlert}" method="post" th:object="${alert}">
