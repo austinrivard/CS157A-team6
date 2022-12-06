@@ -53,11 +53,16 @@
             </tr>
         </thead>
         <tbody>
-            <!-- <tr th:each = "flight : ${flights}">
+            <tr th:each = "flight : ${flights}">
                 <td th:text = "${flight.arrivalTime}"></td>
                 <td th:text = "${flight.departureTime}"></td>
+                <td th:text = "${flight.flightNumber}"></td>
                 <td th:text = "${flight.name}"></td>
-            </tr> -->
+                <td>
+                    <a href="#" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/editFlight/' + ${flight.id}}"></i> Edit</a>
+                    <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/deleteFlight/' + ${flight.id}}"></i> Delete</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
