@@ -35,10 +35,15 @@ public class FlightFinderController {
         this.userService = userService;
     }
 
+    @GetMapping("")
+    public String viewIndex() {
+        return "login";
+    }
+
 	@GetMapping("index")
 	public String viewHomePage(Model model) {
 		model.addAttribute("alert", new Alert());
-		// model.addAttribute("flightNumber", new String());
+		model.addAttribute("flightNumber", new String());
 		return "index";
 	}
 
