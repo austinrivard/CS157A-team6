@@ -1,6 +1,7 @@
 package edu.sjsu.team6.flightfinder.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -53,4 +54,12 @@ public class User {
 
     @OneToMany(mappedBy = "setBy", fetch = FetchType.LAZY)
     private List<Alert> alerts;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }
+    )
+    private List<Role> roles = new ArrayList<>();
 }

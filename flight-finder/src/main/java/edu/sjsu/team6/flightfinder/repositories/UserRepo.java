@@ -8,5 +8,7 @@ import edu.sjsu.team6.flightfinder.models.User;
 @Repository
 public interface UserRepo extends JpaRepository<User, String>
 {
-    
+    User findUserByEmail(String email);
+    User findUserByUsername(String username);
+
 }

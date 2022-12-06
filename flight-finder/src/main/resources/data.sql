@@ -9,7 +9,14 @@ VALUES
     ('immsdhoni', '', 'Mahendra', 'Dhoni', '1981-09-09', 'M', '+1(408) 983-3297', 'asdf@asdf.com', 'Los Angeles', 'CA', '98392'),
     ('rulak', '', 'Rula', 'Khayrallah', '1990-10-01', 'F', '+1(408) 398-3982', 'asdf@asdf.com', 'Los Altos', 'CA', '95214'),
     ('zoew', '', 'Zoe', 'Wang', '2001-10-19', 'F', '+1(925) 298-1983', 'asdf@asdf.com', 'New Jersey', 'NY', '39820'),
-    ('gaikwadabhishek', '', 'Abhishek', 'Gaikwad', '1996-07-08', 'M', '+1(408) 922-8040', 'asdf@asdf.com', 'San Jose', 'CA', '98313')
+    ('gaikwadabhishek', '', 'Abhishek', 'Gaikwad', '1996-07-08', 'M', '+1(408) 922-8040', 'asdf@asdf.com', 'San Jose', 'CA', '98313'),
+    ('user', '$2a$10$DFdRPhkntLjBVQK537vSueWF3roCmZXrWqqnjyVDmeR.FI0pRZ1Ny', 'user', 'mikewu', '1996-07-08', 'M', '+1(408) 922-8040', 'asdf@asdf.com', 'San Jose', 'CA', '98313')
+;
+
+INSERT into roles (id, name)
+VALUES
+    (6, 'ROLE_ADMIN'),
+    (11, 'ROLE_USER')
 ;
 
 INSERT INTO airline (name, website_url, contact_number)
