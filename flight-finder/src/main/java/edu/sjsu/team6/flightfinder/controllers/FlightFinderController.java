@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.websocket.server.PathParam;
 
@@ -147,10 +149,10 @@ public class FlightFinderController {
     public ModelAndView submitSearch(Model model, @ModelAttribute("flight") Flight flight)
     {
         ModelAndView modelAndView = new ModelAndView();
-        List<Flight> successfulSearches = flightRepository.findAllByDepartsFromAirportCode(
-            flight.getDepartsFromAirportCode()
-        );
-        modelAndView.addObject("flights", successfulSearches);
+        List<Flight> unorderedSuccessfulSearches = flightRepository.findAllByDepartsFromAirportCodeAndArrivesAtAirportCode
+        (flight.getDepartsFromAirportCode(), flight.getArrivesAtAirportCode());
+        TreeSet<Flight> orderedSuccessfulSearches = new TreeSet<>(unorderedSuccessfulSearches);
+        modelAndView.addObject("flights", orderedSuccessfulSearches);
         modelAndView.setViewName("search_results");
         return modelAndView;
     }

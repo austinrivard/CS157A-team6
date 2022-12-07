@@ -12,7 +12,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="flight")
-public class Flight {
+public class Flight implements Comparable<Flight> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -42,4 +42,9 @@ public class Flight {
 
     private String departsFromAirportCode;
     private String arrivesAtAirportCode;
+
+    public int compareTo(Flight other)
+    {
+        return this.departureTime.compareTo(other.departureTime);
+    }
 }
