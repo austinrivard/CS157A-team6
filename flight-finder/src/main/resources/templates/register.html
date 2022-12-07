@@ -82,14 +82,20 @@
 							required minlength="2" maxlength="20"/>
 				</div>
 			</div>
-			
+
 			<div class="form-group row">
+                <label class="col-4 col-form-label">Date of Birth </label>
+                <div class="col-8">
+                    <input type="date" th:field="*{dob}"/>
+                </div>
+            </div>
+			<!-- <div class="form-group row">
 				<label class="col-4 col-form-label">Date of Birth: </label>
 				<div class="col-8">
-					<!-- <input type="date" name="begin" placeholder="dd-mm-yyyy" value="*{dob}" /> -->
+
 					<input type="date" name="begin" placeholder="dd-mm-yyyy" value="dob" />
 				</div>
-			</div>
+			</div> -->
 
             <div class="form-group row">
 				<label class="col-4 col-form-label">Mobile Number: </label>

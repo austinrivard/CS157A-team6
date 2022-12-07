@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.hibernate.annotations.Formula;
 import org.springframework.lang.NonNull;
 
@@ -36,6 +37,7 @@ public class User implements Serializable {
 
     private String gender;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dob;
 
     private String mobileNumber;
