@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.sjsu.team6.flightfinder.models.*;
 import edu.sjsu.team6.flightfinder.services.*;
-
+import edu.sjsu.team6.flightfinder.repositories.AirportRepository;
 import edu.sjsu.team6.flightfinder.repositories.FlightRepository;
 import edu.sjsu.team6.flightfinder.repositories.UserRepo;
 @Controller
@@ -42,6 +42,9 @@ public class FlightFinderController {
 
 	@Autowired
 	private FlightRepository flightRepository;
+
+    @Autowired
+    private AirportRepository airportRepository;
 
     public FlightFinderController(UserService userService, FlightService flightService) {
         this.userService = userService;
@@ -141,6 +144,7 @@ public class FlightFinderController {
     @GetMapping("/search")
     public String openSearch(Model model)
     {
+        model.addAttribute("airports", airportRepository.findAll());
         model.addAttribute("flight", new Flight());
         return "search";
     }

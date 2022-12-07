@@ -21,28 +21,59 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-color bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">FlightFinder</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/users}">Admin</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/search}">Search Flights</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
     <div align="center">
         <br>
-        <h1>Search for flights:</h1>
         <br>
-        <br>
+        <h2>Search for flights:</h2>
         <br>
         <form action="#" th:action="@{/search}" th:object="${flight}" method="post">
-
+            <datalist id="airportCodes">
+                <option th:each="row : ${airports}" th:value="${row.code}">
+            </datalist>
             <!--Prompt for Departure Airport-->
-            <label>Departure Airport:</label>
-            <input type="text" th:field="*{departsFromAirportCode}"/>
+            <div class="input-group w-50">
+                <label class="form-label">Departure Airport:</label>
+                <input class="form-control" list="airportCodes" th:field="*{departsFromAirportCode}"/>
+            </div>
             <br>
             <br>
 
+            <div class="input-group w-50">
+                <label class="form-label">Arrival Airport:</label>
+                <input class="form-control" list="airportCodes" th:field="*{arrivesAtAirportCode}"/>
+            </div>
             <!--Prompt for Arrival Airport-->
-            <label>Arrival Airport:</label>
-            <input type="text" th:field="*{arrivesAtAirportCode}"/>
+            <!-- <label>Arrival Airport:</label>
+            <input type="text" th:field="*{arrivesAtAirportCode}"/> -->
             <br>
             <br>
 
             <!--Search button-->
-            <button type="submit">Search</button>
+            <button type="submit" class="btn btn-primary">Search</button>
 
         </form>
     </div>
