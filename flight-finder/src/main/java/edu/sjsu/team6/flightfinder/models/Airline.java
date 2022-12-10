@@ -21,6 +21,6 @@ public class Airline {
 
     private String contactNumber;
 
-    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "airline", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Flight> flights;
 }

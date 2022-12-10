@@ -20,6 +20,6 @@ public class Zone {
     @ManyToOne
     private Flight flight;
 
-    @OneToMany(mappedBy = "zone", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "zone", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats;
 }
