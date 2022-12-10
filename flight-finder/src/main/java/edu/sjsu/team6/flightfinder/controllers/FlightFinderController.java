@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -194,5 +196,63 @@ public class FlightFinderController {
         System.out.println(flight);
         flightService.saveFlight(flight);
         return "redirect:/addFlight?success";
+    }
+
+    @GetMapping("/seating/{flightId}")
+    public ModelAndView assignSeat(@PathParam("flightId") Integer flightId) {
+        ModelAndView mav = new ModelAndView("seating");
+                
+        List<Zone> zones = new ArrayList<>();
+        List<Map<String, Object>> zoneMaps = jdbcTemplate.queryForList(
+            "SELECT * FROM zone WHERE flight_id=?", flightId
+        );
+        for (Map<String, Object> zoneMap : zoneMaps) {
+            Zone zone = new Zone();
+            zone.setClassType((String) zoneMap.get("class_type"));
+            zone.setFare((String) zoneMap.get("fare"));
+            zone.setFlight(flightRepository.findById((Integer) zoneMap.get("flight_id")).get());
+            zone.setId((Integer) zoneMap.get("id"));
+            zones.add(zone);
+        }
+
+        List<List<Seat>> rows = new ArrayList<>(40);
+        for (int i = 0; i < 40; i++) { rows.add(new ArrayList<>(4)); }
+        for (Zone zone : zones) {
+            List<Map<String, Object>> seatMaps = jdbcTemplate.queryForList(
+                "SELECT * FROM seat WHERE zone_id=?", zone.getId()
+            );
+            for (Map<String, Object> seatMap : seatMaps) {
+                Seat seat = new Seat();
+                seat.setZone(zone);
+                seat.setId((Integer) seatMap.get("id"));
+                seat.setExitRow(false);
+                String seatNumber = (String) seatMap.get("seat_number");
+                seat.setSeatNumber(seatNumber);
+                seat.setId(flightId);
+                
+                int row = Integer.parseInt(seatNumber.replaceAll("\\D.*", ""));
+                rows.get(row).add(seat);
+                System.out.println("row: " + row + ", added seat: " + seat);
+            }
+        }
+
+        mav.addObject("rows", rows);
+        System.out.println("added rows: " + rows);
+        return mav;
+    }
+
+    @PostMapping("/book/{flightId}/{seatId}")
+    public ModelAndView bookSeat(@PathParam("flightId") Integer flightId, @PathParam("seatId") Integer seatId) {
+        ModelAndView mav = new ModelAndView("search_results");
+
+        Flight flight = flightRepository.findById(flightId).get();
+        List<Flight> unorderedSuccessfulSearches = flightRepository.findAllByDepartsFromAirportCodeAndArrivesAtAirportCode
+            (flight.getArrivesAtAirportCode(), flight.getDepartsFromAirportCode());
+        unorderedSuccessfulSearches.removeIf(f -> f.getDepartureTime().compareTo(flight.getArrivalTime()) < 0);
+        TreeSet<Flight> orderedSuccessfulSearches = new TreeSet<>(unorderedSuccessfulSearches);
+        mav.addObject("flights", orderedSuccessfulSearches);
+        mav.addObject("departingFlight", flightId);
+
+        return mav;
     }
 }
