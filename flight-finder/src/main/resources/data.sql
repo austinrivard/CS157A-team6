@@ -15,17 +15,32 @@ VALUES
 
 INSERT into roles (id, name)
 VALUES
-    -- (1, 'ROLE_ADMIN'),
-    -- (2, 'ROLE_ADMIN'),
-    -- (3, 'ROLE_ADMIN'),
-    -- (4, 'ROLE_ADMIN'),
-    -- (5, 'ROLE_ADMIN'),
+    (1, 'John Reed'),
+    (2, 'Becky Robinson'),
+    (3, 'Bob Davidson'),
+    (4, 'Virat Kohli'),
+    (5, 'Ben Reed'),
     (6, 'ROLE_ADMIN'),
-    -- (7, 'ROLE_USER'),
-    -- (8, 'ROLE_USER')
-    -- (9, 'ROLE_USER'),
-    -- (10, 'ROLE_USER'),
+    (7, 'Mahendra Dhoni'),
+    (8, 'Rula Khayrallah'),
+    (9, 'Zoe Wang'),
+    (10, 'Abhishek Gaikwad'),
     (11, 'ROLE_USER')
+;
+
+INSERT into users_roles (user_id, role_id)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (10, 10),
+    (11, 11)
 ;
 
 INSERT INTO airline (name, website_url, contact_number)
