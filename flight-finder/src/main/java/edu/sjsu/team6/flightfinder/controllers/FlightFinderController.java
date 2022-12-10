@@ -37,15 +37,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.sjsu.team6.flightfinder.models.*;
 import edu.sjsu.team6.flightfinder.services.*;
-import edu.sjsu.team6.flightfinder.repositories.AirportRepository;
-import edu.sjsu.team6.flightfinder.repositories.FlightRepository;
-import edu.sjsu.team6.flightfinder.repositories.UserRepo;
+import edu.sjsu.team6.flightfinder.repositories.*;
+
 @Controller
 public class FlightFinderController {
 	
     @Autowired
     private UserService userService;
     private FlightService flightService;
+    private AirlineService airlineService;
 
     @Autowired 
     private UserRepo userRepo;
@@ -59,9 +59,13 @@ public class FlightFinderController {
     @Autowired
     private AirportRepository airportRepository;
 
-    public FlightFinderController(UserService userService, FlightService flightService) {
+    @Autowired
+    private AirlineRepository airlineRepository;
+
+    public FlightFinderController(UserService userService, FlightService flightService, AirlineService airlineService) {
         this.userService = userService;
         this.flightService = flightService;
+        this.airlineService = airlineService;
     }
     public void connectToAPI() throws IOException 
     {
@@ -187,6 +191,14 @@ public class FlightFinderController {
         return "flight";
     }
 
+    @GetMapping("/airlines")
+    public String airlines(Model model){
+        List<Airline> airlines = airlineService.findAllAirlines();
+        model.addAttribute("airlines", airlines);
+        model.addAttribute("airline", new Airline());
+        return "airlines";
+    }
+
     @GetMapping("/search")
     public String openSearch(Model model)
     {
@@ -221,6 +233,12 @@ public class FlightFinderController {
         return "redirect:/flight?deleteSuccess";
     }
 
+    @PostMapping("/deleteAirline")
+    public String deleteAirline(@ModelAttribute("airline") Airline airline) {
+        airlineRepository.deleteById(airline.getId());
+        return "redirect:/airlines?deleteSuccess";
+    }
+
     @PostMapping("/deleteUser")
     public String deleteUser(@ModelAttribute("user") User user) {
         userRepo.deleteById(user.getId());
@@ -234,12 +252,27 @@ public class FlightFinderController {
         return "addFlight";
     }
 
+    @GetMapping("/addAirline")
+    public String addAirline(Model model){
+        Airline airline = new Airline();
+        model.addAttribute("airline", airline);
+        return "addAirline";
+    }
+
     @PostMapping("/saveFlight")
     public String saveFlight(@ModelAttribute("flight") Flight flight, Model model)
     {
         System.out.println(flight);
         flightService.saveFlight(flight);
         return "redirect:/addFlight?success";
+    }
+
+    @PostMapping("/saveAirline")
+    public String saveAirline(@ModelAttribute("airline") Airline airline, Model model)
+    {
+        System.out.println(airline);
+        airlineService.saveAirline(airline);
+        return "redirect:/addAirline?success";
     }
 
     @GetMapping("/seating/{flightId}/{departingFlight}")
