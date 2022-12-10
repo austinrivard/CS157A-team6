@@ -5,9 +5,11 @@ import java.util.List;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
+@ToString(exclude="flights")
 public class Airline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

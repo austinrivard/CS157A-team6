@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -274,14 +275,20 @@ public class FlightFinderController {
         return "redirect:/addAirline?success";
     }
 
-    @GetMapping("/seating/{flightId}")
-    public ModelAndView assignSeat(@PathParam("flightId") Integer flightId) {
+    @GetMapping("/seating/{flightId}/{departingFlight}")
+    public ModelAndView assignSeat(@PathVariable Integer flightId, @PathVariable String departingFlight) {
         ModelAndView mav = new ModelAndView("seating");
+        
                 
+        System.out.println("departingFlight: " + departingFlight);
+            
         List<Zone> zones = new ArrayList<>();
         List<Map<String, Object>> zoneMaps = jdbcTemplate.queryForList(
             "SELECT * FROM zone WHERE flight_id=?", flightId
         );
+        // System.out.println("Querying for zones with flightId: " + flightId);
+        // System.out.println("Number of zones found: " + zoneMaps.size());
+
         for (Map<String, Object> zoneMap : zoneMaps) {
             Zone zone = new Zone();
             zone.setClassType((String) zoneMap.get("class_type"));
@@ -291,12 +298,15 @@ public class FlightFinderController {
             zones.add(zone);
         }
 
+
+
         List<List<Seat>> rows = new ArrayList<>(40);
         for (int i = 0; i < 40; i++) { rows.add(new ArrayList<>(4)); }
         for (Zone zone : zones) {
             List<Map<String, Object>> seatMaps = jdbcTemplate.queryForList(
                 "SELECT * FROM seat WHERE zone_id=?", zone.getId()
             );
+            // System.out.println("Number of seats found: " + seatMaps.size());
             for (Map<String, Object> seatMap : seatMaps) {
                 Seat seat = new Seat();
                 seat.setZone(zone);
@@ -304,31 +314,46 @@ public class FlightFinderController {
                 seat.setExitRow(false);
                 String seatNumber = (String) seatMap.get("seat_number");
                 seat.setSeatNumber(seatNumber);
-                seat.setId(flightId);
+                seat.setId(Integer.valueOf(flightId));
                 
                 int row = Integer.parseInt(seatNumber.replaceAll("\\D.*", ""));
-                rows.get(row).add(seat);
-                System.out.println("row: " + row + ", added seat: " + seat);
+                rows.get(row-1).add(seat);
+                // System.out.println("row: " + row + ", added seat: " + seat);
             }
         }
 
         mav.addObject("rows", rows);
-        System.out.println("added rows: " + rows);
+        // System.out.println("added rows: " + rows);
         return mav;
     }
 
     @PostMapping("/book/{flightId}/{seatId}")
-    public ModelAndView bookSeat(@PathParam("flightId") Integer flightId, @PathParam("seatId") Integer seatId) {
+    public ModelAndView bookSeat(@PathVariable String flightId, @PathVariable String seatId) {
         ModelAndView mav = new ModelAndView("search_results");
 
-        Flight flight = flightRepository.findById(flightId).get();
+        Flight flight = flightRepository.findById(Integer.parseInt(flightId)).get();
         List<Flight> unorderedSuccessfulSearches = flightRepository.findAllByDepartsFromAirportCodeAndArrivesAtAirportCode
             (flight.getArrivesAtAirportCode(), flight.getDepartsFromAirportCode());
         unorderedSuccessfulSearches.removeIf(f -> f.getDepartureTime().compareTo(flight.getArrivalTime()) < 0);
         TreeSet<Flight> orderedSuccessfulSearches = new TreeSet<>(unorderedSuccessfulSearches);
         mav.addObject("flights", orderedSuccessfulSearches);
         mav.addObject("departingFlight", flightId);
-
+        mav.addObject("departingSeat", seatId);
         return mav;
+    }
+
+    @PostMapping("/saveItinerary/{departingFlight}/{returnFlight}")
+    public String saveItinerary(@PathVariable String departingFlight, @PathVariable String returnFlight) {
+        Flight depFlight = flightRepository.findById(Integer.parseInt(departingFlight)).get();
+        Flight retFlight = flightRepository.findById(Integer.parseInt(returnFlight)).get();
+		User currentUser = ((MyUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+
+        int rowsAffected = jdbcTemplate.update(
+			"INSERT INTO itinerary (arrival_time, departure_time, arrives_at_id, departs_from_id, searched_by_id) VALUES (?,?,?,?,?)",
+			depFlight.getArrivalTime(), depFlight.getDepartureTime(), depFlight.getArrivesAt().getId(), depFlight.getDepartsFrom().getId(), currentUser.getId()
+		);
+
+		System.out.println("updated " + rowsAffected + " rows.");
+		return (rowsAffected == 0) ? "redirect:/index?saveError" : "redirect:/index?saveSuccess";
     }
 }
