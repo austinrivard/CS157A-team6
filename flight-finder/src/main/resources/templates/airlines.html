@@ -35,41 +35,41 @@
         </div>
     </div>
 </nav>
-<div class="alert alert-info" th:if="${param.deleteSuccess}">Successfully deleted user!</div>
+<div class="alert alert-info" th:if="${param.editSuccess}">Successfully edited airline!</div>
+<div class="alert alert-info" th:if="${param.deleteSuccess}">Successfully deleted airline!</div>
 <div class="container">
-    <div class="row col-md-10">
-
-    </div>
-    <!-- <a th:href="@{/addUser}">
-        <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add new user</button> -->
-    </a>
+    <div class="row col-md-10"> 
     <br/>
-    <h2>Registered Users</h2>
+    </div>
+    <h2>Airline Partners</h2>
+
+    <a th:href="@{/addAirline}">
+        <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add a new airline partner</button>
+    </a>
 	<br/>
+    <br/>
+
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Airline Name</th>
+                <th>Website</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each = "user : ${users}">
-                <td th:text = "${user.firstName}"></td>
-                <td th:text = "${user.lastName}"></td>
-                <td th:text = "${user.username}"></td>
-                <td th:text = "${user.email}"></td>
+            <tr th:each = "airline : ${airlines}">
+                <td th:text = "${airline.contactNumber}"></td>
+                <td th:text = "${airline.name}"></td>
+                <td th:text = "${airline.websiteUrl}"></td>
                 <td>
-
-                    <form method="post" th:action="@{/deleteUser}" th:object="${user}">
-                        <input hidden="true" th:value="${user.id}" name="id">
-                        <button type="submit" class="btn btn-danger btn-xs purple deleteView">Delete</button>
-                    </form>
-                <!-- <a href="#" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/editUser/' + ${user.id}}"><i class="fa fa-edit"></i> Edit</a>
-                <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/deleteUser/' + ${user.id}}"><i class="fa fa-trash-o"></i> Delete</a> -->
+                    <div class="input-group">
+                        <form method="post" th:action="@{/deleteAirline}" th:object="${airline}">
+                            <input hidden="true" th:value="${airline.id}" name="id">
+                            <button type="submit" class="btn btn-danger btn-xs purple deleteView">Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         </tbody>
