@@ -8,9 +8,11 @@ import javax.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
+@ToString(exclude={"zones", "alerts"})
 @Table(name="flight")
 public class Flight implements Comparable<Flight> {
     @Id

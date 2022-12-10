@@ -40,12 +40,17 @@
         <br/>
         <table class="table table-bordered table-hover">
             <tbody>
-                <span th:text="${rows}"></span>
                 <tr th:each="row : ${rows}">
                     <td th:each="seat : ${row}">
-                        <form method="post" th:action="@{/book}">
-                            <input hidden="true" th:value="${seat.id}" name="seatId">
+                        <form method="post" th:unless="${departingFlight == 'null'}" th:action="@{/saveItinerary/{depId}/{arrId}(depId=${departingFlight},arrId=${flightId})}">
+                            <!-- <input hidden="true" th:value="${seat.id}" name="seatId"> -->
                             <button type="submit" class="btn btn-info btn-xs">Select</button>
+                            <label class="label label-default" th:text="${seat.seatNumber}"></label>
+                        </form>
+                        <form method="post" th:if="${departingFlight == 'null'}" th:action="@{/book/{fId}/{sId}(fId=${flightId},sId=${seat.id})}">
+                            <!-- <input hidden="true" th:value="${seat.id}" name="seatId"> -->
+                            <button type="submit" class="btn btn-info btn-xs">Select</button>
+                            <label class="label label-default" th:text="${seat.seatNumber}"></label>
                         </form>
                     </td>
                 </tr>
