@@ -5,6 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
+import java.util.Iterator;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.sjsu.team6.flightfinder.models.*;
 import edu.sjsu.team6.flightfinder.services.*;
@@ -51,6 +61,39 @@ public class FlightFinderController {
     public FlightFinderController(UserService userService, FlightService flightService) {
         this.userService = userService;
         this.flightService = flightService;
+    }
+    public void connectToAPI() throws IOException 
+    {
+        String dataInURL = stream(new URL("https://app.g" +
+                "oflightlabs.com/search-best-flights?access_key=" +
+                "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI" +
+                "0IiwianRpIjoiN2MyM2ZhM2IxY2M2YWNiNTliNGUyZmUxYTMz" +
+                "OWQyODc2ZmU3YTQ1YjAwMDUxMmQzZWZlZTQxNjM2ZjdiNjg3MG" +
+                "VhMWY1MDUyMzVlMWFjMWQiLCJpYXQiOjE2NzA2MDQ0ODMsIm5i" +
+                "ZiI6MTY3MDYwNDQ4MywiZXhwIjoxNzAyMTQwNDgzLCJzdWIiOi" +
+                "IxOTE4NSIsInNjb3BlcyI6W119.Z-mL0t7S_2MHpOQ9TthBhAvc" +
+                "hrgj_YBmlcpIZ-sCrW88jzMfslkLfblu8QE7voWgqfX6pFFzf8IYzY" +
+                "xc9Ccv1g&adults=1&origin=MAD&destination=FCO&departureDate=2022-12-14"));
+        System.out.println(dataInURL);
+        System.out.println();
+        System.out.println();
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(dataInURL);
+        System.out.println(jsonNode.at("/success"));
+    }
+
+    public String stream(URL url) throws IOException 
+    {
+        try (InputStream input = url.openStream()) {
+            InputStreamReader isr = new InputStreamReader(input);
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder json = new StringBuilder();
+            int c;
+            while ((c = reader.read()) != -1) {
+                json.append((char) c);
+            }
+            return json.toString();
+        }
     }
 
     @GetMapping("/")
@@ -152,7 +195,7 @@ public class FlightFinderController {
     }
 
     @PostMapping("/search")
-    public ModelAndView submitSearch(Model model, @ModelAttribute("flight") Flight flight)
+    public ModelAndView submitSearch(Model model, @ModelAttribute("flight") Flight flight) throws MalformedURLException, IOException
     {
         ModelAndView modelAndView = new ModelAndView();
         List<Flight> unorderedSuccessfulSearches = flightRepository.findAllByDepartsFromAirportCodeAndArrivesAtAirportCode
@@ -162,7 +205,7 @@ public class FlightFinderController {
         modelAndView.setViewName("search_results");
         return modelAndView;
     }
-    
+
     @PostMapping("/editFlight")
     public String editFlight(@ModelAttribute("flight") Flight flight) {
         Flight existingFlight = flightRepository.findById(flight.getId()).get();
